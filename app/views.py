@@ -1,5 +1,4 @@
 import os
-import json
 import requests
 from geopy.geocoders import Nominatim
 
@@ -23,52 +22,56 @@ ALMANAC_BASE_URL = '{}{}/almanac/q/'.format(
     WUNDERGROUND_API_KEY
 )
 
-
 def geocode_location(location):
     "Get lat and lon coordinates for a zip code"
     try:
         geolocator = Nominatim()
         location = geolocator.geocode(location)
-        lat = location.latitude
-        lon = location.longitude
+        # lat = location.latitude
+        # lon = location.longitude
     except Exception as e:
         print('There was a problem geocoding this address: {}'.format(e))
 
-    return [lat, lon]
+    return location
 
 
 def get_current_temp(lat, lon):
     "Get the current temp for a given location"
-    r = requests.get('{base}{lat},{lon}'.format(
+    r = requests.get('{base}{lat},{lon}.json'.format(
         base=CONDITIONS_BASE_URL,
         lat=lat,
-        lon=lon
+        lon=lon)
     )
     json_string = r.json()
     current_temp = json_string['current_observation']['temp_f']
 
-    return current_temp
+    return int(current_temp)
 
 
 def get_record_high(lat, lon):
     "Get the record high in F for a given location"
-    r = requests.get('{base}{lat},{lon}'.format(
+    r = requests.get('{base}{lat},{lon}.json'.format(
         base=ALMANAC_BASE_URL,
         lat=lat,
-        lon=lon
+        lon=lon)
     )
     json_string = r.json()
-    current_temp = json_string['almanac']['temp_high']['record']['F']
+    record_high = json_string['almanac']['temp_high']['record']['F']
+
+    return int(record_high)
+
 
 def get_record_low(lat, lon):
     "Get the record low in F for a given location"
-    r = requests.get('{base}{lat},{lon}'.format(
+    r = requests.get('{base}{lat},{lon}.json'.format(
         base=ALMANAC_BASE_URL,
         lat=lat,
-        lon=lon
+        lon=lon)
     )
     json_string = r.json()
-    current_temp = json_string['almanac']['temp_low']['record']['F']
+    record_low = json_string['almanac']['temp_low']['record']['F']
+
+    return int(record_low)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -80,9 +83,12 @@ def home():
     if form.validate_on_submit():
         temp_choice = form.temp_choice.data
         location = geocode_location(form.location.data)
-        current_temp = get_current_temp(location)
-        record_high = get_record_high(location)
-        record_low = get_record_low(location)
+        lat = location.latitude
+        lon = location.longitude
+        print(lat, lon)
+        current_temp = get_current_temp(lat, lon)
+        record_high = get_record_high(lat, lon)
+        record_low = get_record_low(lat, lon)
 
         if temp_choice == 'hot':
             if current_temp >= record_high:

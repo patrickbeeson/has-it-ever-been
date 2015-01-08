@@ -9,6 +9,7 @@ class Config(object):
     ADMINS = ['pbeeson@thevariable.com']
     WUNDERGROUND_API_KEY = '82cd0bcb8cf21f67'
     WUNDERGROUND_BASE_URL = 'http://api.wunderground.com/api/'
+    SECRET_KEY = 'Test'
 
 
 class DevelopmentConfig(Config):

@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms.fields import SubmitField, StringField, SelectField
-from wtf.validators import DataRequired, Regexp, Length
+from wtforms.validators import DataRequired, Regexp, Length
 
 
 class LocationForm(Form):
@@ -21,7 +21,7 @@ class LocationForm(Form):
         validators=[
             DataRequired('Please enter your zip code.'),
             Length(max=5, message='Zip codes of five digits only.'),
-            Regexp('[/d]{5}')
+            # Regexp('[/d]{5}')
         ]
     )
     submit = SubmitField(
