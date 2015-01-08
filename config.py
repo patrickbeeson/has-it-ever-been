@@ -6,7 +6,9 @@ class Config(object):
     MAIL_PASSWORD = ''
     MAIL_PORT = 465
     MAIL_USE_SSL = True
-    ADMINS = ['']
+    ADMINS = ['pbeeson@thevariable.com']
+    WUNDERGROUND_API_KEY = '82cd0bcb8cf21f67'
+    WUNDERGROUND_BASE_URL = 'http://api.wunderground.com/api/'
 
 
 class DevelopmentConfig(Config):

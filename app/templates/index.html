@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Has it ever been...?</title>
+</head>
+<body>
+    <div class="container">
+        {% block content %}
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
+        <h1><a href="/">Has it even been ...</a></h1>
+        <form method="POST" class="form-inline" role="form">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.location(class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.temp_choice(class_="form-control") }}
+            </div>
+            {{ form.submit(id="form_submit", class_="center-block btn btn-block btn-primary btn-lg") }}
+        </form>
+        {% endblock content %}
+    </div>
+    <footer class="text-center">
+        <p>Copyright</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</body>
+</html>
