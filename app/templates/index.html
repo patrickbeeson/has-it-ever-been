@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Has it ever been...?</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -12,25 +14,36 @@
         {% if form.errors %}
             {{ form.errors }}
         {% endif %}
-        {% for message in get_flashed_messages() %}
-            {{ message }}
-        {% endfor %}
-        <h1><a href="/">Has it even been ...</a></h1>
-        <form method="POST" class="form-inline" role="form">
+        <form method="POST" id="temp_form" class="form-inline" role="form">
             {{ form.csrf_token }}
-            <div class="form-group">
-                {{ form.location(class_="form-control") }}
-            </div>
+            Has it ever been this
             <div class="form-group">
                 {{ form.temp_choice(class_="form-control") }}
             </div>
+            in
+            <div class="form-group">
+                {{ form.location(class_="form-control", required="required", pattern="[0-9]{5}", placeholder="ex. 27102", maxlength="5") }}
+            </div>
+            ?
             {{ form.submit(id="form_submit", class_="center-block btn btn-block btn-primary btn-lg") }}
         </form>
         {% endblock content %}
+        {% block response %}
+        {% if get_flashed_messages() %}
+        <div class="well">
+            {% for message in get_flashed_messages() %}
+                <p class="text-center">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endblock response %}
     </div>
     <footer class="text-center">
-        <p>Copyright</p>
+        <p>Copyright 2015. The Variable.</p>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

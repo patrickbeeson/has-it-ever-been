@@ -1,0 +1,22 @@
+{
+  "name": "hasiteverbeen",
+  "version": "1.0.0",
+  "description": "Test whether it has even been this hot or cold for a location.",
+  "main": "n/a",
+  "scripts": {
+    "test": "n/a"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/n/a"
+  },
+  "author": "Patrick Beeson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/n/a/issues"
+  },
+  "homepage": "https://github.com/n/a",
+  "dependencies": {
+    "gulp": "^3.8.10"
+  }
+}
